@@ -56,7 +56,6 @@ switch(Args[0]) {
     break;
   case "route:list":
     let library = require("./bootstrap/init");
-    console.log(require('express-list-endpoints')(library));
     break;
   default:
     console.info('Here goes the option list...');

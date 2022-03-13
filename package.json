@@ -2,7 +2,7 @@
   "name": "Julien.js",
   "version": "1.0.0",
   "description": "",
-  "main": "julien.js serve",
+  "main": "app.js",
   "scripts": {
     "start": "node julien serve",
     "serve": "node julien serve",
@@ -10,8 +10,8 @@
     "make:service": "node julien make:service",
     "make:route": "node julien make:route"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["Framework"],
+  "author": "Mateus M. Côrtes",
   "license": "None",
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -19,7 +19,6 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
-    "express-list-endpoints": "^6.0.0",
     "mongoose": "^6.2.3",
     "multer": "^1.4.4",
     "uuid": "^8.3.2"

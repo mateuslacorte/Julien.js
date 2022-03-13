@@ -1,0 +1,5 @@
+- create controller default
+- generate a controller through a command
+- list all routes through a command
+- generate insomnia file with documentation
+- generate postman file with documentation

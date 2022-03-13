@@ -1,0 +1,52 @@
+/*
+  Import the File System library
+*/
+const fs = require('fs');
+
+/*
+  Import the Path library
+*/
+const path = require('path');
+
+/*
+  Export the File System utility
+*/
+module.exports = class FileSystem {
+  constructor(dir) {
+    /*
+      Set the date as this.date
+    */
+    this.path = path.join(__dirname, dir);
+  }
+
+  /*
+    List files in a given directory
+  */
+  dir(callback) {
+    fs.readdir(this.path, function (err, files) {
+        if (err) {
+            return console.log('Unable to scan directory: ' + err);
+        } 
+        files.forEach(file=>callback(file));
+    });
+  }
+
+  /*
+    Create file with given name and content
+  */
+  create(name, content, message = 'File was created successfully!') {
+    fs.writeFile(this.path + '/' + name, content, function (err,data) {
+      if (err) {
+        return console.error(err);
+      }
+      console.info(message);
+    });
+  }
+
+  /*
+    Return date set in class instance
+  */
+  get() {
+    return this.path;
+  }
+}

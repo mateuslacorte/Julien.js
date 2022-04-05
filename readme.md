@@ -5,7 +5,7 @@
 ### Julien commands
 Generate a new model with the following command:
 ```
-node julien make:route <name of the model>
+node julien make:model <name of the model>
 ```
 
 Generate a new service with the following command:

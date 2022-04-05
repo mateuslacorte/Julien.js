@@ -31,7 +31,7 @@ switch(Args[0]) {
       content = content.replaceAll('MODEL__NAME_CAPITALIZED', String.capitalize(Args[1].replaceAll("_", " ")).replaceAll(" ", ""));
       dir.create(Args[1].toLowerCase() + '.js', content, 'Controller was created successfully!');
     } else {
-      console.error('Lacking service name!');
+      console.error('Lacking controller name!');
     }
     break;
   case 'make:route':
@@ -40,6 +40,8 @@ switch(Args[0]) {
         const dir = new FileSystem('../route/' + Args[2].toLowerCase() + "/");
         if(Args[3]) {
           let content = Default.routeDefault.replaceAll('ENDPOINT_NAME', Args[3].toLowerCase());
+          content = content.replaceAll('MODEL_NAME', Args[1].toLowerCase());
+          content = content.replaceAll('MODEL__NAME_CAPITALIZED', String.capitalize(Args[1].replaceAll("_", " ")).replaceAll(" ", ""));
           dir.create(Args[1].toLowerCase() + '.js', content, 'Route was created successfully!');
         } else {
           console.error('Lacking endpoint path!');

@@ -122,7 +122,7 @@ router.put('/ENDPOINT_NAME', function(req, res) {
 /*
   Return not allowed method
 */
-router.post('/ENDPOINT_NAME', function(req, res) {
+router.post('/ENDPOINT_NAME/:id', function(req, res) {
   res.setHeader('Allow', 'PUT, DELETE, GET')
   res.status(405);
   res.json({

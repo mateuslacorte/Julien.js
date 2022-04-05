@@ -4,16 +4,16 @@
 const express = require('express');
 
 /*
-  Create a new router for MODEL__NAME_CAPITALIZED
+  Create a new router for User
 */
 const router = express.Router();
 
 /*
-  Create MODEL__NAME_CAPITALIZED
+  Create User
 */
 router.post('/user', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController(req.body);
-  result = MODEL_NAMEInstance.create()
+  userInstance = new UserController(req.body);
+  result = userInstance.create()
   res.status(result[1]);
   res.json(result[0]);
 });
@@ -60,7 +60,7 @@ router.put('/user', function(req, res) {
 /*
   Return not allowed method
 */
-router.post('/user', function(req, res) {
+router.post('/user/:id', function(req, res) {
   res.setHeader('Allow', 'PUT, DELETE, GET')
   res.status(405);
   res.json({
@@ -71,36 +71,36 @@ router.post('/user', function(req, res) {
 });
 
 /*
-  List MODEL__NAME_CAPITALIZED
+  List User
 */
 router.get('/user/:id', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.get(req.params.id)
+  userInstance = new UserController();
+  result = userInstance.get(req.params.id)
   res.status(result[1]);
   res.json(result[0]);
 });
 
 /*
-  Delete MODEL__NAME_CAPITALIZED
+  Delete User
 */
 router.delete('/user/:id', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.delete(req.params.id)
+  userInstance = new UserController();
+  result = userInstance.delete(req.params.id)
   res.status(result[1]);
   res.json(result[0]);
 });
 
 /*
-  Update MODEL__NAME_CAPITALIZED
+  Update User
 */
 router.put('/user/:id', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.update(req.params.id, req.body)
+  userInstance = new UserController();
+  result = userInstance.update(req.params.id, req.body)
   res.status(result[1]);
   res.json(result[0]);    
 });
 
 /*
-  Export the MODEL__NAME_CAPITALIZED router
+  Export the User router
 */
 module.exports = router;

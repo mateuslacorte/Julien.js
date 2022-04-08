@@ -83,8 +83,10 @@ router.post('/user/:id', function(req, res) {
 router.get('/user/:id', function(req, res) {
   userInstance = new UserController();
   result = userInstance.get(req.params.id)
-  res.status(result.status);
-  res.json(result.response);
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
 });
 
 /*
@@ -93,8 +95,10 @@ router.get('/user/:id', function(req, res) {
 router.delete('/user/:id', function(req, res) {
   userInstance = new UserController();
   result = userInstance.delete(req.params.id)
-  res.status(result.status);
-  res.json(result.response);
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
 });
 
 /*
@@ -103,8 +107,10 @@ router.delete('/user/:id', function(req, res) {
 router.put('/user/:id', function(req, res) {
   userInstance = new UserController();
   result = userInstance.update(req.params.id, req.body)
-  res.status(result.status);
-  res.json(result.response);    
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });    
 });
 
 /*

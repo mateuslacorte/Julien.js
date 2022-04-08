@@ -1,4 +1,9 @@
 /*
+Import the user controller
+*/
+const UserController = require('../../controller/user');
+
+/*
     Import the Express library
 */
 const express = require('express');
@@ -14,8 +19,10 @@ const router = express.Router();
 router.post('/user', function(req, res) {
   userInstance = new UserController(req.body);
   result = userInstance.create()
-  res.status(result[1]);
-  res.json(result[0]);
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
 });
 
 /*
@@ -76,8 +83,8 @@ router.post('/user/:id', function(req, res) {
 router.get('/user/:id', function(req, res) {
   userInstance = new UserController();
   result = userInstance.get(req.params.id)
-  res.status(result[1]);
-  res.json(result[0]);
+  res.status(result.status);
+  res.json(result.response);
 });
 
 /*
@@ -86,8 +93,8 @@ router.get('/user/:id', function(req, res) {
 router.delete('/user/:id', function(req, res) {
   userInstance = new UserController();
   result = userInstance.delete(req.params.id)
-  res.status(result[1]);
-  res.json(result[0]);
+  res.status(result.status);
+  res.json(result.response);
 });
 
 /*
@@ -96,8 +103,8 @@ router.delete('/user/:id', function(req, res) {
 router.put('/user/:id', function(req, res) {
   userInstance = new UserController();
   result = userInstance.update(req.params.id, req.body)
-  res.status(result[1]);
-  res.json(result[0]);    
+  res.status(result.status);
+  res.json(result.response);    
 });
 
 /*

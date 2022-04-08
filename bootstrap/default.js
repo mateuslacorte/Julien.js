@@ -61,6 +61,11 @@ schema.post('findOneAndUpdate', function(model) {
 */
 module.exports = mongoose.model('MODEL__NAME_CAPITALIZED', schema);`,
     routeDefault: `/*
+Import the MODEL_NAME controller
+*/
+const MODEL__NAME_CAPITALIZEDController = require('../../controller/MODEL_NAME');
+
+/*
     Import the Express library
 */
 const express = require('express');
@@ -76,8 +81,10 @@ const router = express.Router();
 router.post('/ENDPOINT_NAME', function(req, res) {
   MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController(req.body);
   result = MODEL_NAMEInstance.create()
-  res.status(result[1]);
-  res.json(result[0]);
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
 });
 
 /*
@@ -138,8 +145,10 @@ router.post('/ENDPOINT_NAME/:id', function(req, res) {
 router.get('/ENDPOINT_NAME/:id', function(req, res) {
   MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
   result = MODEL_NAMEInstance.get(req.params.id)
-  res.status(result[1]);
-  res.json(result[0]);
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
 });
 
 /*
@@ -148,8 +157,10 @@ router.get('/ENDPOINT_NAME/:id', function(req, res) {
 router.delete('/ENDPOINT_NAME/:id', function(req, res) {
   MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
   result = MODEL_NAMEInstance.delete(req.params.id)
-  res.status(result[1]);
-  res.json(result[0]);
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
 });
 
 /*
@@ -158,8 +169,10 @@ router.delete('/ENDPOINT_NAME/:id', function(req, res) {
 router.put('/ENDPOINT_NAME/:id', function(req, res) {
   MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
   result = MODEL_NAMEInstance.update(req.params.id, req.body)
-  res.status(result[1]);
-  res.json(result[0]);    
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });    
 });
 
 /*
@@ -169,7 +182,7 @@ module.exports = router;`,
     serviceDefault: `/*
     Import the MODEL_NAME model
 */
-const MODEL_NAME = require('../model/MODEL_NAME');
+const MODEL__NAME_CAPITALIZED = require('../model/MODEL_NAME');
 
 /*
   Import the Time utility
@@ -193,11 +206,11 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
   }
 
   /*
-    Return an item from MODEL_NAME by given id
+    Return an item from MODEL__NAME_CAPITALIZED by given id
   */
   getById(id) {
     return new Promise((res) => {
-      MODEL_NAME.findOne(
+      MODEL__NAME_CAPITALIZED.findOne(
         {
           '_id': new ObjectId(id)
         },
@@ -225,12 +238,12 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
   }
 
   /*
-    Create an item from MODEL_NAME by the MODEL_NAME passed on the constructor
+    Create an item from MODEL__NAME_CAPITALIZED by the MODEL_NAME passed on the constructor
   */
   create() {
-    let MODEL_NAME = new MODEL_NAME(this.MODEL_NAME);
+    let MODEL_NAME = new MODEL__NAME_CAPITALIZED(this.MODEL_NAME);
     return new Promise((res) => {
-      post.save((err) => {
+      MODEL_NAME.save((err) => {
         if (err) {
           if (err.code === 11000) {
             res({
@@ -267,7 +280,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
   */
   update(id, fields) {
     return new Promise((res) => {
-      MODEL_NAME.findOneAndUpdate(
+      MODEL__NAME_CAPITALIZED.findOneAndUpdate(
         {
           '_id': new ObjectId(id)
         },
@@ -303,7 +316,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
   */
   delete(id) {
     return new Promise((res) => {
-      MODEL_NAME.findOneAndDelete(
+      MODEL__NAME_CAPITALIZED.findOneAndDelete(
         {
           '_id': new ObjectId(id)
         },
@@ -358,44 +371,36 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     Return an item from MODEL_NAME by given id
     */
     getById(id) {
-        MODEL_NAMEService = new MODEL__NAME_CAPITALIZEDService();
-        result = MODEL_NAMEInstance.getById(id)
-        result.then((result)=>{
-            return result;
-        });
+        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
+        let result = MODEL_NAMEInstance.getById(id)
+        return result;
     }
 
     /*
     Create an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
-    create(data) {
-        MODEL_NAMEService = new MODEL__NAME_CAPITALIZEDService(data);
-        result = MODEL_NAMEInstance.create()
-        result.then((result)=>{
-            return result;
-        });
+    create() {
+        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService(this.user);
+        let result = MODEL_NAMEInstance.create()
+        return result;
     }
 
     /*
     Update an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
     update(id, fields) {
-        MODEL_NAMEService = new MODEL__NAME_CAPITALIZEDService();
-        result = MODEL_NAMEInstance.getById(id, fields)
-        result.then((result)=>{
-            return result;
-        })
+        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
+        let result = MODEL_NAMEInstance.getById(id, fields)
+        return result;
     }
 
     /*
     Delete an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
     delete(id) {
-        MODEL_NAMEService = new MODEL__NAME_CAPITALIZEDService();
-        result = MODEL_NAMEInstance.delete(id)
-        result.then((result)=>{
-            return result;
-        });
+        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
+        let result = MODEL_NAMEInstance.delete(id)
+        return result;
     }
 }`
 }

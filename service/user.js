@@ -1,7 +1,7 @@
 /*
     Import the user model
 */
-const user = require('../model/user');
+const User = require('../model/user');
 
 /*
   Import the Time utility
@@ -25,11 +25,11 @@ module.exports = class UserService {
   }
 
   /*
-    Return an item from user by given id
+    Return an item from User by given id
   */
   getById(id) {
     return new Promise((res) => {
-      user.findOne(
+      User.findOne(
         {
           '_id': new ObjectId(id)
         },
@@ -57,12 +57,12 @@ module.exports = class UserService {
   }
 
   /*
-    Create an item from user by the user passed on the constructor
+    Create an item from User by the user passed on the constructor
   */
   create() {
-    let user = new user(this.user);
+    let user = new User(this.user);
     return new Promise((res) => {
-      post.save((err) => {
+      user.save((err) => {
         if (err) {
           if (err.code === 11000) {
             res({
@@ -99,7 +99,7 @@ module.exports = class UserService {
   */
   update(id, fields) {
     return new Promise((res) => {
-      user.findOneAndUpdate(
+      User.findOneAndUpdate(
         {
           '_id': new ObjectId(id)
         },
@@ -135,7 +135,7 @@ module.exports = class UserService {
   */
   delete(id) {
     return new Promise((res) => {
-      user.findOneAndDelete(
+      User.findOneAndDelete(
         {
           '_id': new ObjectId(id)
         },

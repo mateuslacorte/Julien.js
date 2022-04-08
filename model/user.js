@@ -56,6 +56,7 @@ const schema = mongoose.Schema({
 */
 schema.pre('save', function(next) {
 	if(!this.isModified('password')) return next();
+  console.log("ok");
 	bcrypt.genSalt(
     // The Number() is meant to work with repl.it
 		Number(process.env.SALT_WORK_FACTOR),
@@ -67,6 +68,7 @@ schema.pre('save', function(next) {
         (err, hash) => {
 				  if(err) return next(err);
 				  this.password = hash;
+          console.log("ok");
 				  next();
 			  }
       );

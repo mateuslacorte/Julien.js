@@ -23,43 +23,35 @@ module.exports = class UserController {
     Return an item from user by given id
     */
     getById(id) {
-        userService = new UserService();
-        result = userInstance.getById(id)
-        result.then((result)=>{
-            return result;
-        });
+        let userInstance = new UserService();
+        let result = userInstance.getById(id)
+        return result;
     }
 
     /*
     Create an item from user by the user passed on the constructor
     */
-    create(data) {
-        userService = new UserService(data);
-        result = userInstance.create()
-        result.then((result)=>{
-            return result;
-        });
+    create() {
+        let userInstance = new UserService(this.user);
+        let result = userInstance.create()
+        return result;
     }
 
     /*
     Update an item from user by the user passed on the constructor
     */
     update(id, fields) {
-        userService = new UserService();
-        result = userInstance.getById(id, fields)
-        result.then((result)=>{
-            return result;
-        })
+        let userInstance = new UserService();
+        let result = userInstance.getById(id, fields)
+        return result;
     }
 
     /*
     Delete an item from user by the user passed on the constructor
     */
     delete(id) {
-        userService = new UserService();
-        result = userInstance.delete(id)
-        result.then((result)=>{
-            return result;
-        });
+        let userInstance = new UserService();
+        let result = userInstance.delete(id)
+        return result;
     }
 }

@@ -144,7 +144,7 @@ router.post('/ENDPOINT_NAME/:id', function(req, res) {
 */
 router.get('/ENDPOINT_NAME/:id', function(req, res) {
   MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.get(req.params.id)
+  result = MODEL_NAMEInstance.getById(req.params.id)
   result.then((result)=>{
     res.status(result.status);
     res.json(result.response);
@@ -390,7 +390,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     */
     update(id, fields) {
         let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.getById(id, fields)
+        let result = MODEL_NAMEInstance.update(id, fields)
         return result;
     }
 

@@ -54,19 +54,29 @@ const schema = mongoose.Schema({
 /*
   Modify the User model before saving
 */
-schema.pre('save', function(next) {
-	if(!this.isModified('password')) return next();
+schema.pre(/^(updateOne|save|findOneAndUpdate)/, function(next) {
+  let isModifiedPassword;
+  try{
+    isModifiedPassword = !this.isModified("password");
+  } catch(err) {
+    if(err) isModifiedPassword = !this._update.password; this.password = !this._update.password;
+  }
+	if(isModifiedPassword) return next();
 	bcrypt.genSalt(
     // The Number() is meant to work with repl.it
 		Number(process.env.SALT_WORK_FACTOR),
 		(err, salt) => {
 			if(err) return next(err);
 			bcrypt.hash(
-        this.password,
+        this.password.toString(),
         salt,
         (err, hash) => {
 				  if(err) return next(err);
-				  this.password = hash;
+          try {
+            this._update.password = hash;
+          } catch(err) {
+            if(err) this.password = hash;
+          }
 				  next();
 			  }
       );
@@ -80,7 +90,6 @@ schema.pre('save', function(next) {
 schema.post('findOneAndUpdate', function(model) {
   const modifiedFields = this.getUpdate().$set;
   delete modifiedFields.updated_at;
-  console.log()
   Object.keys(modifiedFields).forEach((field) => {
     const history = new History({
       collection_name: "users",

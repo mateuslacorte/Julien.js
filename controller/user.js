@@ -42,7 +42,7 @@ module.exports = class UserController {
     */
     update(id, fields) {
         let userInstance = new UserService();
-        let result = userInstance.getById(id, fields)
+        let result = userInstance.update(id, fields)
         return result;
     }
 

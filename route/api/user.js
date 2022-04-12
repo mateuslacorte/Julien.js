@@ -82,7 +82,7 @@ router.post('/user/:id', function(req, res) {
 */
 router.get('/user/:id', function(req, res) {
   userInstance = new UserController();
-  result = userInstance.get(req.params.id)
+  result = userInstance.getById(req.params.id)
   result.then((result)=>{
     res.status(result.status);
     res.json(result.response);

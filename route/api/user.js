@@ -28,7 +28,7 @@ router.post('/user', function(req, res) {
 /*
   Return not allowed method
 */
-router.get('/user/', function(req, res) {
+router.get('/user', function(req, res) {
   res.setHeader('Allow', 'POST')
   res.status(405);
   res.json({

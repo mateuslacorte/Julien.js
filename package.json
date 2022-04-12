@@ -10,7 +10,9 @@
     "make:service": "node julien make:service",
     "make:route": "node julien make:route"
   },
-  "keywords": ["Framework"],
+  "keywords": [
+    "Framework"
+  ],
   "author": "Mateus M. Côrtes",
   "license": "None",
   "dependencies": {

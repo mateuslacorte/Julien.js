@@ -90,7 +90,7 @@ router.post('/ENDPOINT_NAME', function(req, res) {
 /*
   Return not allowed method
 */
-router.get('/ENDPOINT_NAME/', function(req, res) {
+router.get('/ENDPOINT_NAME', function(req, res) {
   res.setHeader('Allow', 'POST')
   res.status(405);
   res.json({

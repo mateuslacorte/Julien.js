@@ -31,6 +31,13 @@ module.exports = class FileSystem {
     });
   }
 
+  read(path) {
+    try {
+      return fs.readFileSync(path, 'utf8');
+    } catch(err) {
+      if (err) return err;
+    }
+  }
   /*
     Create file with given name and content
   */

@@ -27,6 +27,62 @@ module.exports = class UserService {
   /*
     Return an item from User by given id
   */
+  signin() {
+    return new Promise((res) => {
+      let user = this.user
+      User.findOne(
+        {
+          'username': user.username
+        },
+        (err, result) => {
+          if (err) {
+            console.error(
+              `${Time.now()} - user get error: `
+              +
+              err
+            );
+            res({
+              'status': 500,
+              'response': {
+                'error': 'user get error.'
+              }
+            });
+          }
+          result.comparePassword(user.password, (err, r)=>{
+            if(err) {
+              console.error(
+                `${Time.now()} - user match error: `
+                +
+                err
+              );
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'user match error.'
+                }
+              });
+            }
+            if(!r) {
+              res({
+                'status': 403,
+                'response': {
+                  'error': "username or password don't match!"
+                }
+              });
+            }
+            res({
+              'status': 200,
+              'response': result
+            });
+          });
+        }
+      );
+    });
+  }
+
+  /*
+    Return an item from User by given id
+  */
   getById(id) {
     return new Promise((res) => {
       User.findOne(
@@ -86,9 +142,7 @@ module.exports = class UserService {
         }
         res({
           'status': 201,
-          'response': {
-            'error': 'user creation completed.'
-          }
+          'response': 'user creation completed.'
         });
       });
     });
@@ -112,18 +166,26 @@ module.exports = class UserService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'user update error.'
-              }
-            });
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'user update error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'user update error.'
+                }
+              });
+            }
+
           }
           res({
             'status': 200,
-            'response': {
-              'error': 'user update completed.'
-            }
+            'response': 'user update completed.'
           });
         }
       );
@@ -156,9 +218,7 @@ module.exports = class UserService {
           }
           res({
             'status': 200,
-            'response': {
-              'error': 'user delete completed.'
-            }
+            'response': 'user delete completed.'
           });
         }
       );

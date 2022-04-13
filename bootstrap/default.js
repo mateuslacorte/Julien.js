@@ -267,9 +267,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
         }
         res({
           'status': 201,
-          'response': {
-            'error': 'MODEL_NAME creation completed.'
-          }
+          'response': 'MODEL_NAME creation completed.'
         });
       });
     });
@@ -302,9 +300,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
           }
           res({
             'status': 200,
-            'response': {
-              'error': 'MODEL_NAME update completed.'
-            }
+            'response': 'MODEL_NAME update completed.'
           });
         }
       );
@@ -337,9 +333,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
           }
           res({
             'status': 200,
-            'response': {
-              'error': 'MODEL_NAME delete completed.'
-            }
+            'response': 'MODEL_NAME delete completed.'
           });
         }
       );
@@ -372,7 +366,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     */
     getById(id) {
         let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.getById(id)
+        let result = MODEL_NAMEInstance.getById(id);
         return result;
     }
 
@@ -381,7 +375,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     */
     create() {
         let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService(this.user);
-        let result = MODEL_NAMEInstance.create()
+        let result = MODEL_NAMEInstance.create();
         return result;
     }
 
@@ -390,7 +384,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     */
     update(id, fields) {
         let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.update(id, fields)
+        let result = MODEL_NAMEInstance.update(id, fields);
         return result;
     }
 
@@ -399,7 +393,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     */
     delete(id) {
         let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.delete(id)
+        let result = MODEL_NAMEInstance.delete(id);
         return result;
     }
 }`

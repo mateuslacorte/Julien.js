@@ -16,6 +16,57 @@ const router = express.Router();
 /*
   Create User
 */
+router.post('/signin', function(req, res) {
+  userInstance = new UserController(req.body);
+  result = userInstance.signin()
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  });
+});
+
+/*
+  Return not allowed method
+*/
+router.get('/signin', function(req, res) {
+  res.setHeader('Allow', 'POST')
+  res.status(405);
+  res.json({
+      "status": 405,
+      "message": 'Unsuported method used!',
+      "allowedMethods": 'POST'
+  });  
+});
+
+/*
+  Return not allowed method
+*/
+router.delete('/signin', function(req, res) {
+  res.setHeader('Allow', 'POST')
+    res.status(405);
+    res.json({
+      "status": 405,
+      "message": 'Unsuported method used!',
+        "allowedMethods": 'POST'
+    });  
+});
+
+/*
+  Return not allowed method
+*/
+router.put('/signin', function(req, res) {
+  res.setHeader('Allow', 'POST')
+    res.status(405);
+    res.json({
+        "status": 405,
+        "message": 'Unsuported method used!',
+        "allowedMethods": 'POST'
+  });       
+});
+
+/*
+  Create User
+*/
 router.post('/user', function(req, res) {
   userInstance = new UserController(req.body);
   result = userInstance.create()

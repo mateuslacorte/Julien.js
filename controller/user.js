@@ -22,9 +22,18 @@ module.exports = class UserController {
     /*
     Return an item from user by given id
     */
+    signin() {
+        let userInstance = new UserService(this.user);
+        let result = userInstance.signin();
+        return result;
+    }
+  
+    /*
+    Return an item from user by given id
+    */
     getById(id) {
         let userInstance = new UserService();
-        let result = userInstance.getById(id)
+        let result = userInstance.getById(id);
         return result;
     }
 
@@ -33,7 +42,7 @@ module.exports = class UserController {
     */
     create() {
         let userInstance = new UserService(this.user);
-        let result = userInstance.create()
+        let result = userInstance.create();
         return result;
     }
 
@@ -42,7 +51,7 @@ module.exports = class UserController {
     */
     update(id, fields) {
         let userInstance = new UserService();
-        let result = userInstance.update(id, fields)
+        let result = userInstance.update(id, fields);
         return result;
     }
 
@@ -51,7 +60,7 @@ module.exports = class UserController {
     */
     delete(id) {
         let userInstance = new UserService();
-        let result = userInstance.delete(id)
+        let result = userInstance.delete(id);
         return result;
     }
 }

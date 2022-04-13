@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 /*
   Import the Bcrypt library
 */
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 /*
   Import the Time utility
@@ -62,7 +62,13 @@ schema.pre(/^(updateOne|save|findOneAndUpdate)/, function(next) {
     if(err) isModifiedPassword = !this._update.password; this.password = !this._update.password;
   }
 	if(isModifiedPassword) return next();
-	bcrypt.genSalt(
+  let password;
+  try {
+    password = this.getUpdate().$set.password
+  } catch(err) {
+    if(err) password = this.password;
+  }
+  bcrypt.genSalt(
     // The Number() is meant to work with repl.it
 		Number(process.env.SALT_WORK_FACTOR),
 		(err, salt) => {

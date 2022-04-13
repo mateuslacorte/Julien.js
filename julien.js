@@ -2,7 +2,6 @@ const Args = require('./utils/arguments').get();
 const Default = require('./bootstrap/default');
 const FileSystem = require('./utils/filesystem');
 const String = require('./utils/string');
-
 switch(Args[0]) {
   case 'make:model':
     if(Args[1]) {
@@ -57,7 +56,31 @@ switch(Args[0]) {
     require("./app");
     break;
   case "route:list":
-    let library = require("./bootstrap/init");
+    const FileSystem = require('./utils/filesystem');
+    const web = new FileSystem('../route/web');
+    const api = new FileSystem('../route/api');
+    let routes = {
+      "post": [],
+      "put": [],
+      "get": [],
+      "delete": []
+    }
+    web.dir((file) => {
+      routes_raw = web.read(web.get() + "/" + file).match(/(?<=router.)(.*)(?=',)/g);
+      routes_raw.map((route, index)=>{
+        route = route.split("('");
+        routes[route[0]].push(route[1]);
+      })
+      console.log(routes);
+    });
+    api.dir((file) => {
+      routes_raw = api.read(api.get() + "/" + file).match(/(?<=router.)(.*)(?=',)/g);
+      routes_raw.map((route, index)=>{
+        route = route.split("('");
+        routes[route[0]].push("/api/:api_version"+route[1]);
+      })
+      console.log(routes);
+    });
     break;
   default:
     console.info('Here goes the option list...');

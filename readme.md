@@ -23,6 +23,11 @@ Generate a new route with the following command:
 node julien make:route <name of the route> <type of the route, allowed types: web, api> <path of the route>
 ```
 
+List all the routes with the following command:
+```
+node julien route:list
+```
+
 Run the app with the following command:
 ```
 node julien serve

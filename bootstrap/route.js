@@ -24,8 +24,9 @@ module.exports = ((app) => {
   /*
     Load route/api routes
   */
-const mySecret = 
   api.dir((file) => {
     app.use(`/api/${process.env.API_VERSION}`, require(api.get() + "/" + file));
   });
 });
+
+//

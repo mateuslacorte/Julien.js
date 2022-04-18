@@ -56,7 +56,6 @@ switch(Args[0]) {
     require("./app");
     break;
   case "route:list":
-    const FileSystem = require('./utils/filesystem');
     const web = new FileSystem('../route/web');
     const api = new FileSystem('../route/api');
     let routes = {
@@ -64,23 +63,34 @@ switch(Args[0]) {
       "put": [],
       "get": [],
       "delete": []
-    }
-    web.dir((file) => {
-      routes_raw = web.read(web.get() + "/" + file).match(/(?<=router.)(.*)(?=',)/g);
-      routes_raw.map((route, index)=>{
-        route = route.split("('");
-        routes[route[0]].push(route[1]);
-      })
-      console.log(routes);
+    }, web_routes = false, api_routes = false;
+    web.dir(async (file) => {
+      if(file.length){
+        routes_raw = web.read(web.get() + "/" + file).match(/(?<=router.)(.*)(?=',)/g);
+        await routes_raw.map((route, index)=>{
+          route = route.split("('");
+          routes[route[0]].push(route[1]);
+        });
+      }
+      web_routes = true;
     });
-    api.dir((file) => {
-      routes_raw = api.read(api.get() + "/" + file).match(/(?<=router.)(.*)(?=',)/g);
-      routes_raw.map((route, index)=>{
-        route = route.split("('");
-        routes[route[0]].push("/api/:api_version"+route[1]);
-      })
-      console.log(routes);
+    api.dir(async (file) => {
+      if(file.length) {
+        routes_raw = api.read(api.get() + "/" + file).match(/(?<=router.)(.*)(?=',)/g);
+        await routes_raw.map((route, index)=>{
+          route = route.split("('");
+          routes[route[0]].push("/api/:api_version"+route[1]);
+        });
+      }
+      api_routes = true;
     });
+    (function n(){
+      if(api_routes && web_routes) {
+        console.log(routes);
+      } else {
+        setTimeout(n, 1000);
+      }
+    })()
     break;
   default:
     console.info('Here goes the option list...');

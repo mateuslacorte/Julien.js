@@ -18,14 +18,19 @@ module.exports = ((app) => {
     Load route/web routes
   */
   web.dir((file) => {
-    app.use(require(web.get() + "/" + file));
+    if(file.length){
+      app.use(require(web.get() + "/" + file));
+    }
+    
   });
 
   /*
     Load route/api routes
   */
   api.dir((file) => {
-    app.use(`/api/${process.env.API_VERSION}`, require(api.get() + "/" + file));
+    if(file.length) {
+      app.use(`/api/${process.env.API_VERSION}`, require(api.get() + "/" + file));
+    }
   });
 });
 

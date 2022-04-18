@@ -26,7 +26,8 @@ module.exports = class FileSystem {
     fs.readdir(this.path, function (err, files) {
         if (err) {
             return console.log('Unable to scan directory: ' + err);
-        } 
+        }
+        if(!files.length) callback("");
         files.forEach(file=>callback(file));
     });
   }

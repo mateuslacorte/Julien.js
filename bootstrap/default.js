@@ -221,12 +221,21 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'MODEL_NAME get error.'
-              }
-            });
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'MODEL_NAME get error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'MODEL_NAME get error.'
+                }
+              });
+            }
           }
           res({
             'status': 200,
@@ -258,12 +267,21 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
             +
             err
           );
-          res({
-            'status': 500,
-            'response': {
-              'error': 'MODEL_NAME creation error.'
-            }
-          });
+          if(err instanceof TypeError) {
+            res({
+              'status': 400,
+              'response': {
+                'error': 'MODEL_NAME creation error.'
+              }
+            });
+          } else {
+            res({
+              'status': 500,
+              'response': {
+                'error': 'MODEL_NAME creation error.'
+              }
+            });
+          }
         }
         res({
           'status': 201,
@@ -291,12 +309,21 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'MODEL_NAME update error.'
-              }
-            });
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'MODEL_NAME update error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'MODEL_NAME update error.'
+                }
+              });
+            }
           }
           res({
             'status': 200,
@@ -324,12 +351,21 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'MODEL_NAME delete error.'
-              }
-            });
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'MODEL_NAME delete error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'MODEL_NAME delete error.'
+                }
+              });
+            }
           }
           res({
             'status': 200,
@@ -374,7 +410,7 @@ module.exports = class MODEL__NAME_CAPITALIZEDController {
     Create an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
     create() {
-        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService(this.user);
+        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService(this.MODEL_NAME);
         let result = MODEL_NAMEInstance.create();
         return result;
     }

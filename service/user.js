@@ -41,40 +41,58 @@ module.exports = class UserService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'user get error.'
-              }
-            });
-          }
-          result.comparePassword(user.password, (err, r)=>{
-            if(err) {
-              console.error(
-                `${Time.now()} - user match error: `
-                +
-                err
-              );
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'user get error.'
+                }
+              });
+            } else {
               res({
                 'status': 500,
                 'response': {
-                  'error': 'user match error.'
+                  'error': 'user get error.'
                 }
               });
             }
-            if(!r) {
+          }
+          if(result) {
+            result.comparePassword(user.password, (err, r)=>{
+              if(err) {
+                console.error(
+                  `${Time.now()} - user match error: `
+                  +
+                  err
+                );
+                res({
+                  'status': 500,
+                  'response': {
+                    'error': 'user match error.'
+                  }
+                });
+              }
+              if(!r) {
+                res({
+                  'status': 403,
+                  'response': {
+                    'error': "username or password don't match!"
+                  }
+                });
+              }
               res({
-                'status': 403,
-                'response': {
-                  'error': "username or password don't match!"
-                }
+                'status': 200,
+                'response': result
               });
-            }
-            res({
-              'status': 200,
-              'response': result
             });
-          });
+          } else {
+            res({
+              'status': 403,
+              'response': {
+              'error': "username or password don't match!"
+              }
+            });
+          }
         }
       );
     });
@@ -96,12 +114,21 @@ module.exports = class UserService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'user get error.'
-              }
-            });
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'user get error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'user get error.'
+                }
+              });
+            }
           }
           res({
             'status': 200,
@@ -133,12 +160,21 @@ module.exports = class UserService {
             +
             err
           );
-          res({
-            'status': 500,
-            'response': {
-              'error': 'user creation error.'
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'user creation error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'user creation error.'
+                }
+              });
             }
-          });
         }
         res({
           'status': 201,
@@ -181,7 +217,6 @@ module.exports = class UserService {
                 }
               });
             }
-
           }
           res({
             'status': 200,
@@ -209,12 +244,21 @@ module.exports = class UserService {
               +
               err
             );
-            res({
-              'status': 500,
-              'response': {
-                'error': 'user delete error.'
-              }
-            });
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'user delete error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'user delete error.'
+                }
+              });
+            }
           }
           res({
             'status': 200,

@@ -21,11 +21,11 @@ const schema = mongoose.Schema({
 		required: 'Field name is required.'
 	},
 	old_value: {
-		type: String,
+		type: mongoose.Schema.Types.Mixed,
 		required: 'Old value is required.'
 	},
 	new_value: {
-		type: String,
+		type: mongoose.Schema.Types.Mixed,
 		required: 'New value is required.'
 	},
   object_id: {

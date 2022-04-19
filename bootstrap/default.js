@@ -34,14 +34,33 @@ const schema = mongoose.Schema({
   Add the change to history after updating
 */
 schema.post('findOneAndUpdate', function(model) {
-  const modifiedFields = this.getUpdate().$set;
+  let modifiedFields = this.getUpdate().$set;
   delete modifiedFields.updated_at;
+  let incrementedFields = this.getUpdate().$inc;
   Object.keys(modifiedFields).forEach((field) => {
     const history = new History({
       collection_name: 'MODEL__NAME_CAPITALIZED',
       collection_field: field,
       old_value: model[field],
       new_value: modifiedFields[field],
+      object_id: model["_id"]
+    });
+    history.save((err) => {
+      if (err) {
+        console.error(
+          \`\${Time.now()} - History creation error: \`
+          +
+          err
+        );
+      }
+    });
+  })
+  Object.keys(incrementedFields).forEach((field) => {
+    const history = new History({
+      collection_name: 'MODEL__NAME_CAPITALIZED',
+      collection_field: field,
+      old_value: model[field],
+      new_value: model[field]+incrementedFields[field],
       object_id: model["_id"]
     });
     history.save((err) => {

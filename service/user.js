@@ -178,7 +178,9 @@ module.exports = class UserService {
         }
         res({
           'status': 201,
-          'response': 'user creation completed.'
+          'response': {
+            'message': 'user creation completed.'
+          }
         });
       });
     });
@@ -220,7 +222,9 @@ module.exports = class UserService {
           }
           res({
             'status': 200,
-            'response': 'user update completed.'
+            'response': {
+              'message': 'user update completed.'
+            }
           });
         }
       );
@@ -262,7 +266,9 @@ module.exports = class UserService {
           }
           res({
             'status': 200,
-            'response': 'user delete completed.'
+            'response': {
+              'message': 'user delete completed.'
+            }
           });
         }
       );

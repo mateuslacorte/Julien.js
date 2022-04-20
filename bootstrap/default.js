@@ -304,7 +304,9 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
         }
         res({
           'status': 201,
-          'response': 'MODEL_NAME creation completed.'
+          'response': {
+            'message': 'MODEL_NAME creation completed.'
+          }
         });
       });
     });
@@ -346,7 +348,9 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
           }
           res({
             'status': 200,
-            'response': 'MODEL_NAME update completed.'
+            'response': {
+              'message': 'MODEL_NAME update completed.'
+            }
           });
         }
       );
@@ -388,7 +392,9 @@ module.exports = class MODEL__NAME_CAPITALIZEDService {
           }
           res({
             'status': 200,
-            'response': 'MODEL_NAME delete completed.'
+            'response': {
+              'message': 'MODEL_NAME delete completed.'
+            }
           });
         }
       );

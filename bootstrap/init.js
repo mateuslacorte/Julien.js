@@ -9,6 +9,11 @@ module.exports = (() => {
     Init the Database module
   */
   require('./database');
+
+  /*
+    Init the Mail module
+  */
+  global.mail = require('./mail');
   
   /*
     Init the HTTP/HTTPS module

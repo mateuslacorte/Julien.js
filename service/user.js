@@ -143,6 +143,7 @@ module.exports = class UserService {
     Create an item from User by the user passed on the constructor
   */
   create() {
+    this.user.email_confirmation_token = require('uuid').v4();
     let user = new User(this.user);
     return new Promise((res) => {
       user.save((err) => {
@@ -176,12 +177,28 @@ module.exports = class UserService {
               });
             }
         }
-        res({
-          'status': 201,
-          'response': {
-            'message': 'user creation completed.'
+        global.mail.sendMessage(
+          process.env.MAIL_USER,
+          this.user.email,
+          "Confirm your e-mail!",
+          "Hi, "+this.user.username+"!<br/><br/>Please click <a href='"+process.env.APP_PROTOCOL+"://"+process.env.APP_HOST+":"+process.env.APP_PORT+"/user/confirm/email/"+this.user.email_confirmation_token+"'>here</a> to confirm your e-mail.",
+          (err) => {
+            if(err){
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'user creation error. '+err
+                }
+              });
+            }
+            res({
+              'status': 201,
+              'response': {
+                'message': 'user creation completed.'
+              }
+            });
           }
-        });
+        )
       });
     });
   }
@@ -268,6 +285,54 @@ module.exports = class UserService {
             'status': 200,
             'response': {
               'message': 'user delete completed.'
+            }
+          });
+        }
+      );
+    });
+  }
+
+  /*
+    Confirm user e-mail by the token given on parameter
+  */
+  confirmEmail(token) {
+    return new Promise((res) => {
+      User.findOneAndUpdate(
+        {
+          'email_confirmation_token': token
+        },
+        {
+          'email_confirmed': true,
+          'email_confirmation_token': ""
+        },
+        {},
+        (err) => {
+          if (err) {
+            console.error(
+              `${Time.now()} - e-mail confirmation error: `
+              +
+              err
+            );
+            if(err instanceof TypeError) {
+              res({
+                'status': 400,
+                'response': {
+                  'error': 'e-mail confirmation error.'
+                }
+              });
+            } else {
+              res({
+                'status': 500,
+                'response': {
+                  'error': 'e-mail confirmation error.'
+                }
+              });
+            }
+          }
+          res({
+            'status': 200,
+            'response': {
+              'message': 'e-mail confirmation completed.'
             }
           });
         }

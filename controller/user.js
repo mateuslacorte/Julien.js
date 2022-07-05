@@ -63,4 +63,13 @@ module.exports = class UserController {
         let result = userInstance.delete(id);
         return result;
     }
+
+  /*
+    Confirm user e-mail by the token given on parameter
+  */
+    confirmEmail(token) {
+        let userInstance = new UserService();
+        let result = userInstance.confirmEmail(token);
+        return result;
+    }
 }

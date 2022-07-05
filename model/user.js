@@ -43,6 +43,13 @@ const schema = mongoose.Schema({
 		type: String,
 		required: 'Password is required.'
 	},
+  email_confirmation_token: {
+    type: String
+  },
+	email_confirmed: {
+		type: Boolean,
+    default: false
+	},
 }, {
   versionKey: 'version_key',
   timestamps: {

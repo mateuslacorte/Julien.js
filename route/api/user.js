@@ -165,6 +165,57 @@ router.put('/user/:id', function(req, res) {
 });
 
 /*
+  Return not allowed method
+*/
+router.post('/user/confirm/email/:token', function(req, res) {
+  res.setHeader('Allow', 'PUT')
+  res.status(405);
+  res.json({
+      "status": 405,
+      "message": 'Unsuported method used!',
+      "allowedMethods": 'PUT'
+  });
+});
+
+/*
+  Return not allowed method
+*/
+router.get('/user/confirm/email/:token', function(req, res) {
+  res.setHeader('Allow', 'PUT')
+  res.status(405);
+  res.json({
+      "status": 405,
+      "message": 'Unsuported method used!',
+      "allowedMethods": 'PUT'
+  });
+});
+
+/*
+  Return not allowed method
+*/
+router.delete('/user/confirm/email/:token', function(req, res) {
+  res.setHeader('Allow', 'PUT')
+  res.status(405);
+  res.json({
+      "status": 405,
+      "message": 'Unsuported method used!',
+      "allowedMethods": 'PUT'
+  });
+});
+
+/*
+  Confirm user's e-mail
+*/
+router.put('/user/confirm/email/:token', function(req, res) {
+  userInstance = new UserController();
+  result = userInstance.confirmEmail(req.params.token)
+  result.then((result)=>{
+    res.status(result.status);
+    res.json(result.response);
+  }); 
+});
+
+/*
   Export the User router
 */
 module.exports = router;

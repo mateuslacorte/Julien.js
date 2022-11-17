@@ -53,7 +53,8 @@ switch(Args[0]) {
     }
     break;
   case "serve":
-    require("./app");
+    const library = require("./bootstrap/init");
+    require("./bootstrap/serve")(library);
     break;
   case "route:list":
     const web = new FileSystem('../route/web');

@@ -28,7 +28,7 @@ module.exports = class FileSystem {
             return console.log('Unable to scan directory: ' + err);
         }
         if(!files.length) callback("");
-        files.forEach(file=>callback(file));
+        files.filter(file=>!file.match(/\.map/)).forEach(file=>callback(file));
     });
   }
 

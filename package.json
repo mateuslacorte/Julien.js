@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "index.js serve",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "make:model": "index.js make:model",
+    "make:service": "index.js make:service",
+    "make:controller": "index.js make:controller",
+    "make:route": "index.js make:route",
+    "route:list": "index.js route:list",
   },
   "repository": {
     "type": "git",

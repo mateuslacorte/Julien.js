@@ -1,5 +1,14 @@
-export default ((app) => {
-  const cors = require('cors');
-  app.use(cors());
-  app.options('/api/*', cors());
+/*
+  Import the Express library
+*/
+import {Express, Request} from 'express';
+
+/*
+  Import the CORS library
+*/
+import cors from 'cors';
+
+export default ((app: Express) => {
+  app.use(cors<Request>());
+  app.options('/api/*', cors<Request>());
 });

@@ -1,11 +1,19 @@
 /*
     Create the Framework defaults
 */
-export default {
+
+interface Default {
+  modelDefault : string;
+  routeDefault : string;
+  serviceDefault : string;
+  controllerDefault : string;
+}
+
+const sample : Default = {
     modelDefault: `/*
     Import the Mongoose library
 */
-import {mongoose} from 'mongoose';
+import mongoose, {Schema, Document} from 'mongoose';
 
 /*
   Import the Time utility
@@ -20,7 +28,7 @@ import {History} from '../model/history';
 /*
   Create the MODEL__NAME_CAPITALIZED schema
 */
-const schema = mongoose.Schema({
+const schema : Schema = new mongoose.Schema({
   // Your schema goes here
 }, {
   versionKey: 'version_key',
@@ -34,11 +42,10 @@ const schema = mongoose.Schema({
   Add the change to history after updating
 */
 schema.post('findOneAndUpdate', function(model) {
-  let modifiedFields = this.getUpdate().$set;
+  let modifiedFields : any = this.getUpdate().$set;
   delete modifiedFields.updated_at;
-  let incrementedFields = this.getUpdate().$inc;
   Object.keys(modifiedFields).forEach((field) => {
-    const history = new History({
+    const history : Document = new History({
       collection_name: 'MODEL__NAME_CAPITALIZED',
       collection_field: field,
       old_value: model[field],
@@ -69,20 +76,20 @@ import {MODEL__NAME_CAPITALIZEDController} from '../../controller/MODEL_NAME';
 /*
     Import the Express library
 */
-const express = require('express');
+import express, {Request, Response, Router} from 'express';
 
 /*
   Create a new router for MODEL__NAME_CAPITALIZED
 */
-const router = express.Router();
+const router : Router = express.Router();
 
 /*
   Create MODEL__NAME_CAPITALIZED
 */
-router.post('/ENDPOINT_NAME', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController(req.body);
-  result = MODEL_NAMEInstance.create();
-  result.then((result)=>{
+router.post('/ENDPOINT_NAME', function(req : Request, res : Response) {
+  let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDController = new MODEL__NAME_CAPITALIZEDController(req.body);
+  let result : Promise<unknown> = MODEL_NAMEInstance.create();
+  result.then((result : any)=>{
     res.status(result.status);
     res.json(result.response);
   });
@@ -91,7 +98,7 @@ router.post('/ENDPOINT_NAME', function(req, res) {
 /*
   Return not allowed method
 */
-router.get('/ENDPOINT_NAME', function(req, res) {
+router.get('/ENDPOINT_NAME', function(req : Request, res : Response) {
   res.setHeader('Allow', 'POST');
   res.status(405);
   res.json({
@@ -104,7 +111,7 @@ router.get('/ENDPOINT_NAME', function(req, res) {
 /*
   Return not allowed method
 */
-router.delete('/ENDPOINT_NAME', function(req, res) {
+router.delete('/ENDPOINT_NAME', function(req : Request, res : Response) {
   res.setHeader('Allow', 'POST');
     res.status(405);
     res.json({
@@ -117,7 +124,7 @@ router.delete('/ENDPOINT_NAME', function(req, res) {
 /*
   Return not allowed method
 */
-router.put('/ENDPOINT_NAME', function(req, res) {
+router.put('/ENDPOINT_NAME', function(req : Request, res : Response) {
   res.setHeader('Allow', 'POST');
     res.status(405);
     res.json({
@@ -130,7 +137,7 @@ router.put('/ENDPOINT_NAME', function(req, res) {
 /*
   Return not allowed method
 */
-router.post('/ENDPOINT_NAME/:id', function(req, res) {
+router.post('/ENDPOINT_NAME/:id', function(req : Request, res : Response) {
   res.setHeader('Allow', 'PUT, DELETE, GET');
   res.status(405);
   res.json({
@@ -143,10 +150,10 @@ router.post('/ENDPOINT_NAME/:id', function(req, res) {
 /*
   List MODEL__NAME_CAPITALIZED
 */
-router.get('/ENDPOINT_NAME/:id', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.getById(req.params.id);
-  result.then((result)=>{
+router.get('/ENDPOINT_NAME/:id', function(req : Request, res : Response) {
+  let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDController = new MODEL__NAME_CAPITALIZEDController();
+  let result : Promise<unknown> = MODEL_NAMEInstance.getById(req.params.id);
+  result.then((result : any)=>{
     res.status(result.status);
     res.json(result.response);
   });
@@ -155,10 +162,10 @@ router.get('/ENDPOINT_NAME/:id', function(req, res) {
 /*
   Delete MODEL__NAME_CAPITALIZED
 */
-router.delete('/ENDPOINT_NAME/:id', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.delete(req.params.id);
-  result.then((result)=>{
+router.delete('/ENDPOINT_NAME/:id', function(req : Request, res : Response) {
+  let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDController = new MODEL__NAME_CAPITALIZEDController();
+  let result : Promise<unknown> = MODEL_NAMEInstance.delete(req.params.id);
+  result.then((result : any)=>{
     res.status(result.status);
     res.json(result.response);
   });
@@ -167,10 +174,10 @@ router.delete('/ENDPOINT_NAME/:id', function(req, res) {
 /*
   Update MODEL__NAME_CAPITALIZED
 */
-router.put('/ENDPOINT_NAME/:id', function(req, res) {
-  MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDController();
-  result = MODEL_NAMEInstance.update(req.params.id, req.body);
-  result.then((result)=>{
+router.put('/ENDPOINT_NAME/:id', function(req : Request, res : Response) {
+  let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDController = new MODEL__NAME_CAPITALIZEDController();
+  let result : Promise<unknown> = MODEL_NAMEInstance.update(req.params.id, req.body);
+  result.then((result : any)=>{
     res.status(result.status);
     res.json(result.response);
   });    
@@ -186,6 +193,11 @@ module.exports = router;`,
 import {default as MODEL__NAME_CAPITALIZED} from '../model/MODEL_NAME';
 
 /*
+  Import the Mongoose library
+*/
+import {Document} from 'mongoose';
+
+/*
   Import the Time utility
 */
 import {Time} from '../utils/time';
@@ -199,7 +211,8 @@ import {ObjectId} from 'bson';
   Export the MODEL__NAME_CAPITALIZED class
 */
 export class MODEL__NAME_CAPITALIZEDService {
-  constructor(MODEL_NAME = null) {
+  MODEL_NAME : any;
+  constructor(MODEL_NAME : any = null) {
     /*
       Set the MODEL_NAME as this.MODEL_NAME
     */
@@ -209,13 +222,13 @@ export class MODEL__NAME_CAPITALIZEDService {
   /*
     Return an item from MODEL__NAME_CAPITALIZED by given id
   */
-  getById(id) {
-    return new Promise((res) => {
+  getById(id : string) : Promise<unknown> {
+    return new Promise((res : any) => {
       MODEL__NAME_CAPITALIZED.findOne(
         {
           '_id': new ObjectId(id)
         },
-        (err, result) => {
+        (err : any, result : any) => {
           if (err) {
             console.error(
               \`\${Time.now()} - MODEL_NAME get error: \`
@@ -250,10 +263,10 @@ export class MODEL__NAME_CAPITALIZEDService {
   /*
     Create an item from MODEL__NAME_CAPITALIZED by the MODEL_NAME passed on the constructor
   */
-  create() {
-    let MODEL_NAME = new MODEL__NAME_CAPITALIZED(this.MODEL_NAME);
-    return new Promise((res) => {
-      MODEL_NAME.save((err) => {
+  create() : Promise<unknown> {
+    let MODEL_NAME : Document = new MODEL__NAME_CAPITALIZED(this.MODEL_NAME);
+    return new Promise((res : any) => {
+      MODEL_NAME.save((err : any) => {
         if (err) {
           if (err.code === 11000) {
             res({
@@ -297,15 +310,15 @@ export class MODEL__NAME_CAPITALIZEDService {
   /*
     Update an item from MODEL_NAME by the MODEL_NAME passed on the constructor
   */
-  update(id, fields) {
-    return new Promise((res) => {
+  update(id : string, fields : any) : Promise<unknown> {
+    return new Promise((res : any) => {
       MODEL__NAME_CAPITALIZED.findOneAndUpdate(
         {
           '_id': new ObjectId(id)
         },
         fields,
         {},
-        (err) => {
+        (err : any) => {
           if (err) {
             console.error(
               \`\${Time.now()} - MODEL_NAME update error: \`
@@ -342,14 +355,14 @@ export class MODEL__NAME_CAPITALIZEDService {
   /*
     Delete an item from MODEL_NAME by the MODEL_NAME passed on the constructor
   */
-  delete(id) {
-    return new Promise((res) => {
+  delete(id : string) : Promise<unknown> {
+    return new Promise((res : any) => {
       MODEL__NAME_CAPITALIZED.findOneAndDelete(
         {
           '_id': new ObjectId(id)
         },
         {},
-        (err) => {
+        (err : any) => {
           if (err) {
             console.error(
               \`\${Time.now()} - MODEL_NAME delete error: \`
@@ -397,47 +410,50 @@ import {Time} from '../utils/time';
 Export the MODEL__NAME_CAPITALIZEDController class
 */
 export class MODEL__NAME_CAPITALIZEDController {
+    MODEL_NAME : any;
     constructor(MODEL_NAME = null) {
-    /*
-    Set the MODEL_NAME as this.MODEL_NAME
-    */
-    this.MODEL_NAME = MODEL_NAME;
+      /*
+      Set the MODEL_NAME as this.MODEL_NAME
+      */
+      this.MODEL_NAME = MODEL_NAME;
     }
 
     /*
     Return an item from MODEL_NAME by given id
     */
-    getById(id) {
-        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.getById(id);
+    getById(id : string) : Promise<unknown> {
+        let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDService = new MODEL__NAME_CAPITALIZEDService();
+        let result : Promise<unknown> = MODEL_NAMEInstance.getById(id);
         return result;
     }
 
     /*
     Create an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
-    create() {
-        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService(this.MODEL_NAME);
-        let result = MODEL_NAMEInstance.create();
+    create() : Promise<unknown> {
+        let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDController = new MODEL__NAME_CAPITALIZEDService(this.MODEL_NAME);
+        let result : Promise<unknown> = MODEL_NAMEInstance.create();
         return result;
     }
 
     /*
     Update an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
-    update(id, fields) {
-        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.update(id, fields);
+    update(id : string, fields : object) : Promise<unknown> {
+        let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDService = new MODEL__NAME_CAPITALIZEDService();
+        let result : Promise<unknown> = MODEL_NAMEInstance.update(id, fields);
         return result;
     }
 
     /*
     Delete an item from MODEL_NAME by the MODEL_NAME passed on the constructor
     */
-    delete(id) {
-        let MODEL_NAMEInstance = new MODEL__NAME_CAPITALIZEDService();
-        let result = MODEL_NAMEInstance.delete(id);
+    delete(id : string) : Promise<unknown> {
+        let MODEL_NAMEInstance : MODEL__NAME_CAPITALIZEDService = new MODEL__NAME_CAPITALIZEDService();
+        let result : Promise<unknown> = MODEL_NAMEInstance.delete(id);
         return result;
     }
 }`
 }
+
+export default sample;

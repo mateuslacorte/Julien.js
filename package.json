@@ -1,7 +1,7 @@
 {
-  "name": "eventsystem",
+  "name": "Julien.js",
   "version": "1.0.0",
-  "description": "System to manage event ticket selling.",
+  "description": "With the objective to scaffold Express.js, Mongoose and REST API routes for faster vanilla development, this project contains generators for  controllers, services and models with a structure similar to Java's DAO archtecture.",
   "main": "index.js",
   "scripts": {
     "start": ".build/index.js serve",
@@ -14,15 +14,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mmendescortes/EventSystem.git"
+    "url": "git+https://github.com/mmendescortes/Julien.js.git"
   },
   "keywords": [],
   "author": "Mateus M. Côrtes",
   "license": "MPL-2.0",
   "bugs": {
-    "url": "https://github.com/mmendescortes/EventSystem/issues"
+    "url": "https://github.com/mmendescortes/Julien.js/issues"
   },
-  "homepage": "https://github.com/mmendescortes/EventSystem#readme",
+  "homepage": "https://github.com/mmendescortes/Julien.js#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",

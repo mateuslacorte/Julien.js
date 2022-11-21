@@ -1,0 +1,36 @@
+version: '3.8'
+services:
+  julien:
+    image: julien
+    restart: always
+    depends_on:
+      - "redis-julien"
+      - "mongo-julien"
+    ports:
+      - "80:3000"
+    networks:
+      - julien
+  redis-julien:
+    image: redis
+    command: ["redis-server", "--bind", "redis-julien", "--port", "6379", "--protected-mode", "no"]
+    restart: always
+    networks:
+      - julien
+  mongo-julien:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: example
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: julien
+    networks:
+      - julien
+    configs:
+      - source: mongo-init
+        target: /docker-entrypoint-initdb.d/mongo-init.js
+networks:
+  julien:
+    driver: bridge
+configs:
+  mongo-init:
+    file: ./mongo-init.js

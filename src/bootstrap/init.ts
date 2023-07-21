@@ -1,47 +1,44 @@
-  /*
-    Import the Express library
-  */
-  import {Express} from 'express';
+/*
+  Import the Express library
+*/
+import {Express} from 'express';
+/*
+  Init the Environment Variables module
+*/
+import {default as Environment} from './environment';
 
-  /*
-    Init the Environment Variables module
-  */
-  import {default as Environment} from './environment';
-  
-  /*
-    Init the Database module
-  */
-  import {default as Database} from './database';
+/*
+  Init the Database module
+*/
+import {default as Database} from './database';
+/*
+  Init the Mail module
+*/
+import {default as Mail} from './mail';
 
-  /*
-    Init the Mail module
-  */
-  import {default as Mail} from './mail';
-  
-  /*
-    Init the HTTP/HTTPS module
-  */
-  import {default as Library} from './library';
-  
-  /*
-    Init the Body module
-  */
-  import {default as Body} from './body';
+/*
+  Init the HTTP/HTTPS module
+*/
+import {default as Library} from './library';
 
-  /*
-    Init the Session module
-  */
-    import {default as Session} from './session';
-  
-  /*
-    Init the CORS module
-  */
-  import {default as CORS} from './cors';
-  
-  /*
-    Init the Route module
-  */
-  import {default as Route} from './route';
+/*
+  Init the Body module
+*/
+import {default as Body} from './body';
+/*
+  Init the Session module
+*/
+  import {default as Session} from './session';
+
+/*
+  Init the CORS module
+*/
+import {default as CORS} from './cors';
+
+/*
+  Init the Route module
+*/
+import {default as Route} from './route';
 
 export default (() : Express => {
   

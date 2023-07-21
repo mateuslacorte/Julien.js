@@ -32,17 +32,14 @@ import {View} from '../utils/view';
   Create the User schema
 */
 const schema : Schema = new mongoose.Schema({
-  // @ts-expect-error
   name: {
-    type: String,
+    type: 'String',
   },
-  // @ts-expect-error
   username: {
-    type: String,
+    type: 'String',
   },
-  // @ts-expect-error
   email: {
-    type: String,
+    type: 'String',
     trim: true,
     lowercase: true,
     unique: true,
@@ -52,27 +49,22 @@ const schema : Schema = new mongoose.Schema({
       'Please fill a valid email address.'
     ],
   },
-  // @ts-expect-error
   password: {
-    type: String,
+    type: 'String',
     required: 'Password is required.'
   },
-  // @ts-expect-error
   email_confirmation_token: {
-    type: String
+    type: 'String'
   },
-  // @ts-expect-error
   email_confirmed: {
-    type: Boolean,
+    type: 'Boolean',
     default: false
   },
-  // @ts-expect-error
   password_reset_token: {
-    type: String
+    type: 'String'
   },
-  // @ts-expect-error
   role: {
-    type: String,
+    type: 'String',
     enum: ['admin', 'staff', 'user'],
     default: 'user'
   }

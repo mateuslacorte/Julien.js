@@ -28,29 +28,6 @@ export default ((app : Express) : void => {
     Instantiate the FileSystem class to route/api
   */
   const api : FileSystem = new FileSystem('route/api');
-  
-  /*
-    Load default routes
-  */
-  app.get('/', (req : Request, res : Response) => {
-    res.status(200);
-    if(req.session.user) {
-      let view : View = new View('web', 'dashboard');
-      res.send(view.parse({
-        user: req.session.user,
-        app: {
-          email: process.env.MAIL_TLS_CIPHERS
-        }
-      }));
-    } else  {
-      let view : View = new View('web', 'home');
-      res.send(view.parse({
-        app: {
-          email: process.env.MAIL_TLS_CIPHERS
-        }
-      }));
-    }
-  })
 
   let api_routes = false
   let web_routes = false;
@@ -81,7 +58,7 @@ export default ((app : Express) : void => {
         Handle 404 error on API
       */
       app.use((req : Request, res : Response) => {
-        if(url(req.originalUrl).pathname?.includes(`/api/${process.env.API_VERSION}`)) {
+        if(url(req.originalUrl).pathname?.includes(`/api`)) {
           res.status(404);
           res.json({
             status: 404,

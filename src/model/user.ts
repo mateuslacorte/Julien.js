@@ -1,36 +1,10 @@
-/*
-  Import the Mongoose library
-*/
-import mongoose, {Schema, Document} from 'mongoose';
-
-/*
-  Import the Bcrypt library
-*/
 import bcrypt from 'bcryptjs';
-
-/*
-  Import the Time utility
-*/
+import {v4 as uuid} from 'uuid';
 import {Time} from '../utils/time';
-
-/*
-  Import the History model
-*/
+import {View} from '../utils/view';
+import mongoose, {Schema, Document} from 'mongoose';
 import {default as History} from '../model/history';
 
-/*
-  Import the UUID library
-*/
-import {v4} from 'uuid';
-
-/*
-  Import the View utility
-*/
-import {View} from '../utils/view';
-
-/*
-  Create the User schema
-*/
 const schema : Schema = new mongoose.Schema({
   name: {
     type: 'String',
@@ -76,9 +50,6 @@ const schema : Schema = new mongoose.Schema({
   },
 });
 
-/*
-  Modify the User model before saving
-*/
 schema.pre(/^(updateOne|findOneAndUpdate)/, function(next : any) {
   let isModifiedEmail : boolean;
   let isModifiedPassword : boolean;
@@ -104,7 +75,7 @@ schema.pre(/^(updateOne|findOneAndUpdate)/, function(next : any) {
     // @ts-expect-error
     this.email_confirmed = false;
     // @ts-expect-error
-    this.email_confirmation_token = v4();
+    this.email_confirmation_token = uuid();
     let view : View = new View('email', 'confirmEmailLink');
     global.mail.sendMessage(
       process.env.MAIL_USER,
@@ -182,9 +153,6 @@ schema.pre('save', function(next : any) {
   );
 });
 
-/*
-  Add the change to history after updating
-*/
 schema.post('findOneAndUpdate', function(model : any) {
   // @ts-expect-error
   const modifiedFields : any = this.getUpdate().$set;
@@ -209,9 +177,6 @@ schema.post('findOneAndUpdate', function(model : any) {
   })
 });
 
-/*
-  Compare password to the hash existent on database
-*/
 schema.methods.comparePassword = function(password : string, callback : Function) {
   bcrypt.compare(
     password,
@@ -223,7 +188,4 @@ schema.methods.comparePassword = function(password : string, callback : Function
   );
 };
 
-/*
-  Export the User model
-*/
 export default mongoose.model('User', schema);

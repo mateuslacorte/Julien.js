@@ -1,27 +1,9 @@
-/*
-  Import the Express library
-*/
-import {Express} from 'express';
-
-/*
-  Import the Redis library
-*/
 let Redis = require('redis');
-
-/*
-  Import the Session library
-*/
-let Session = require("express-session")
-
-/*
-  Import the Store library
-*/
-let Store = require("connect-redis")(Session)
-
-/*
-  Import the Time utility
-*/
+import {v4 as uuid} from 'uuid';
 import {Time} from '../utils/time';
+import {Express, Request} from 'express';
+let Session = require("express-session")
+let Store = require("connect-redis")(Session)
 
 export default ((app : Express) : void => {
     let client : any = Redis.createClient({
@@ -45,6 +27,10 @@ export default ((app : Express) : void => {
     });
     client.connect();
     app.use(Session({
+      name: process.env.SESSION_COOKIE, 
+      genid: (request : Request) => {
+        return uuid()
+      },
       store: new Store({
         client: client
       }),

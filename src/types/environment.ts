@@ -20,6 +20,7 @@ declare global {
             REDIS_PORT : number;
             REDIS_SECRET : string;
             SESSION_COOKIE : string;
+            SESSION_DURATION : number;
         }
     }
 }

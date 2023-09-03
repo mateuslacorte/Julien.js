@@ -8,17 +8,17 @@ export default ((app : Express) : Promise<void> => {
     let api_routes = false
     let web_routes = false;
   
-    web.dir((file : File) => {
+    web.dir((file : File, done : boolean) => {
       if(file.length){
         app.use(require(web.get() + '/' + file));
-        web_routes = true;
+        web_routes = done;
       }
     });
   
-    api.dir((file : File) => {
+    api.dir((file : File, done : boolean) => {
       if(file.length) {
         app.use(`/api/${process.env.API_VERSION}`, require(api.get() + '/' + file));
-        api_routes = true;
+        api_routes = done;
       }
     });
 

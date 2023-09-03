@@ -40,7 +40,7 @@ export default ((app : Express) : void => {
       cookie: {
           secure: process.env.APP_PROTOCOL === 'https' ? true : false,
           httpOnly: true,
-          maxAge: 86400000
+          maxAge: process.env.SESSION_DURATION
       }
   }));
 });

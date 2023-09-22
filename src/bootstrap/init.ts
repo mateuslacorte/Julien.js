@@ -1,89 +1,23 @@
-  /*
-    Import the Express library
-  */
-  import {Express} from 'express';
+import {Express} from 'express';
+import {default as ErrorRoute} from './error_route';
+import {default as Mail} from './mail';
+import {default as Body} from './body';
+import {default as Cors} from './cors';
+import {default as Route} from './route';
+import {default as Library} from './library';
+import {default as Session} from './session';
+import {default as Database} from './database';
+import {default as Environment} from './environment';
 
-  /*
-    Init the Environment Variables module
-  */
-  import {default as Environment} from './environment';
-  
-  /*
-    Init the Database module
-  */
-  import {default as Database} from './database';
-
-  /*
-    Init the Mail module
-  */
-  import {default as Mail} from './mail';
-  
-  /*
-    Init the HTTP/HTTPS module
-  */
-  import {default as Library} from './library';
-  
-  /*
-    Init the Body module
-  */
-  import {default as Body} from './body';
-
-  /*
-    Init the Session module
-  */
-    import {default as Session} from './session';
-  
-  /*
-    Init the CORS module
-  */
-  import {default as CORS} from './cors';
-  
-  /*
-    Init the Route module
-  */
-  import {default as Route} from './route';
-
-export default (() : Express => {
-  
-  /*
-    Init the HTTP/HTTPS module
-  */
-  const library : Express = Library();
-
-  /*
-    Init the Environment module
-  */
+export default (async () : Promise<Express> => {
+  const app : Express = Library();
   Environment();
-
-  /*
-    Init the Database module
-  */
   Database();
-
-  /*
-    Init the Mail module
-  */
+  Body(app);
+  Session(app);
+  Cors(app);
+  await Route(app);
+  ErrorRoute(app);
   global.mail = Mail();
-  
-  /*
-    Init the Body module
-  */
-  Body(library);
-
-  /*
-    Init the Session module
-  */
-  Session(library);
-  
-  /*
-    Init the CORS module
-  */
-  CORS(library);
-  
-  /*
-    Init the Route module
-  */
-  Route(library);
-
-  return library;
+  return app;
 });

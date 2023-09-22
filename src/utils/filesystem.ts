@@ -29,7 +29,7 @@ export class FileSystem {
             return console.log('Unable to scan directory: ' + err);
         }
         if(!files.length) callback("");
-        files.filter(file=>!file.match(/\.map/)).forEach(file=>callback(file));
+        files.filter(file=>!file.match(/\.map/)).forEach((file,index)=>callback(file, files.length - 1 === index ? true : false));
     });
   }
 

@@ -1,7 +1,7 @@
 /*
-  Import the Mongoose library
+  Import the TypeORM library
 */
-import mongoose, {Mongoose, Connection} from 'mongoose';
+import { DataSource } from "typeorm";
     
 /*
   Import the Time utility
@@ -12,66 +12,30 @@ import {Time} from '../utils/time';
   Export the Database utility
 */
 export class Database {
-  mongoose : Mongoose;
-  connection : Connection;
-  constructor() { 
-    /*
-      Assing the MongoDB connection string
-    */
-    const connectionString : string = process.env.MONGODB_CONNECTION_STRING;
-    
-    /*
-      Set the Mongoose connection
-    */
-    mongoose.connect(
-      connectionString,
-      {
-        // @ts-expect-error
-        useNewUrlParser: true
-      }
-    );
-    
-    /*
-      Alias mongoose as this.mongoose
-    */
-    this.mongoose = mongoose;
-    
-    /*
-      Alias mongoose.connection as this.connection
-    */ 
-    this.connection = mongoose.connection
-    
-    /*
-      Log success on connection
-    */
-    this.connection.on(
-      'connected',
-      console.error.bind(
+
+  sqlite : DataSource;
+
+   constructor()  { 
+
+    this.sqlite = new DataSource({
+      type: process.env.SQLITE_TYPE,
+      database: process.env.SQLITE_PATH
+    });
+
+    this.sqlite.initialize().then(() => {
+      console.warn.bind(
         console,
-        `${Time.now()} - MongoDB connection success.`
+        `${Time.now()} - SQLITE3 is operational.`
       )
-    );
-    
-    /*
-      Log errors on connection
-    */
-    this.connection.on(
-      'error',
+    }).catch((err) => {
       console.error.bind(
         console,
         `${Time.now()} - MongoDB connection error.`
       )
-    );
+    })
     
     /*
-      Log close calls on connection
+      TODO: Log close calls on connection
     */
-    this.connection.on(
-      'close',
-      console.error.bind(
-        console,
-        `${Time.now()} - MongoDB connection closed.`
-      )
-    );
   }
 }
